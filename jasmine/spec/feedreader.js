@@ -32,7 +32,10 @@ $(function() {
          * and that the URL is not empty.
          */
          it('has property', function() {
-            allFeeds.forEach(function(feed){expect(feed.url).toBeTruthy()});
+            allFeeds.forEach(function(feed){
+                expect(feed.url).toBeDefined();
+                expect(feed.url).not.toBe(0);
+            });
          });
 
 
@@ -41,7 +44,10 @@ $(function() {
          * and that the name is not empty.
          */
          it('are defined', function() {
-            allFeeds.forEach(function(feed){expect(feed.name).toBeTruthy()});
+            allFeeds.forEach(function(feed){
+                expect(feed.name).toBeDefined();
+                expect(feed.name).not.toBe(0);
+            });
          });
 
     });
@@ -67,7 +73,7 @@ $(function() {
         * clicked and does it hide when clicked again.
         */
         it('is on/off', function(){
-            let menuElement = document.querySelector('.icon-list');
+            let menuElement = document.querySelector('.menu-icon-link');
 
             menuElement.click();
             expect(bodyElement.classList.contains('menu-hidden')).toBe(false);
@@ -93,7 +99,7 @@ $(function() {
 
         it('has entry', function() {
             var feedElement = document.querySelector('.feed');
-            expect(feedElement.firstElementChild.classList.contains('entry-link')).toBe(true);
+            expect(feedElement.firstElementChild.firstElementChild.classList.contains('entry')).toBe(true);
         });
     });
 
@@ -110,18 +116,17 @@ $(function() {
 
         beforeEach(function(done) {
             loadFeed(0);
-            document.querySelectorAll('.entry-link').forEach(function(entry){
+            document.querySelectorAll('.entry').forEach(function(entry){
                 fisrtFeedEntries.push(entry.innerText);
             });
             loadFeed(1, done);
        }); 
 
         it('content changer', function(){
-            document.querySelectorAll('.entry-link').forEach(function(entry, index){
+            document.querySelectorAll('.entry').forEach(function(entry, index){
                 expect(entry.innerText === fisrtFeedEntries[index]).toBe(false);
             });
         });
-
 
     });
 
